@@ -24,17 +24,18 @@ exports.createUserValidation = [
 
     body("password")
         .exists().withMessage("Password is required")
+        .isString().withMessage("Password must be a string")
         .isLength({ min: 6, max: 15 }).withMessage("Password must be between 6 to 15 characters"),
 
     body("confirmPassword")
         .exists().withMessage("Confirm password is required")
-        .isLength({ min: 6, max: 15 }).withMessage("Confirm password must be between 6 to 15 characters")
+        .isString().withMessage("Password must be a string")
         .custom((value, { req }) => {
-            if (value !== req.body.password) {
-                throw new Error("Password & confirm password must be match")
+            if (String(value) !== String(req.body.password)) {
+                throw new Error("Password & confirm password must match");
             }
             return true;
-        })
+        }),
 ];
 
 

@@ -1,20 +1,8 @@
-
-const { validationResult } = require("express-validator");
 const User = require("../models/userModel");
 
 exports.registration = async (req, res) => {
     try {
         const { confirmPassword, ...newUserData } = req?.body;
-
-        // const errors = validationResult(req);
-
-        // if (!errors.isEmpty()) {
-        //     const formattedError = errors.array().map((err) => ({
-        //         field: err.path,
-        //         message: err.msg,
-        //     }))
-        //     return res.status(400).json({ status: "error", errors: formattedError });
-        // }
 
         const user = await User.create(newUserData);
 
@@ -37,18 +25,6 @@ exports.registration = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
-
-        // const error = validationResult(req);
-
-        // if (!error.isEmpty()) {
-        //     const formattedError = error.array().map((err) => (
-        //         {
-        //             field: err.path,
-        //             message: err.msg
-        //         }
-        //     ))
-        //     return res.status(400).json({ status: "error", error: formattedError });
-        // }
 
         const user = await User.findOne({ email: email });
         if (!user) {
